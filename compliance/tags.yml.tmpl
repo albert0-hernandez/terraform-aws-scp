@@ -1,0 +1,12 @@
+{
+  "tags": {
+%{ for index,tag in tags }
+    %{if index > 0},%{endif}
+    "${tag}": {
+      "tag_key": {
+        "@@assign": "${tag}"
+      }
+    }
+%{ endfor }    
+  }
+}
