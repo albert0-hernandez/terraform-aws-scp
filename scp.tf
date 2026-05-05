@@ -26,8 +26,8 @@ data "aws_iam_policy_document" "this" {
 resource "aws_organizations_policy" "this" {
   for_each = local.service_control_policies
 
-  name     = each.value.sid
-  content  = data.aws_iam_policy_document.this[each.value.sid].json
+  name    = each.value.sid
+  content = data.aws_iam_policy_document.this[each.value.sid].json
 }
 
 
