@@ -1,17 +1,4 @@
 
-
-variable "aws_profile" { default = "eu-west-1" }
-variable "aws_region" { default = "eu-west-1" }
-
-variable "environment" { default = "development" }
-
-variable "backend" {
-  type = object({
-    name = string
-    lock = string
-  })
-}
-
 variable "organization_id" {
   type = string
 }
