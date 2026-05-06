@@ -4,7 +4,7 @@ resource "aws_organizations_policy" "tagging" {
   name    = var.tag_policy_name
   content = templatefile("${path.module}/compliance/tags.yml.tftpl", var.compliance)
 
-  type    = "TAG_POLICY"
+  type = "TAG_POLICY"
 }
 
 resource "aws_organizations_policy_attachment" "tagging" {
@@ -14,7 +14,7 @@ resource "aws_organizations_policy_attachment" "tagging" {
 
 
 locals {
-  _required_tags_map = { for index, v in keys(var.compliance.tags.entries) : "tag${index+1}Key" => v }
+  _required_tags_map = { for index, v in keys(var.compliance.tags.entries) : "tag${index + 1}Key" => v }
 }
 
 resource "aws_config_config_rule" "required_tags" {
