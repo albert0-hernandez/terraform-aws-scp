@@ -3,28 +3,31 @@ variable "organization_id" {
   type = string
 }
 
+variable "tag_policy_name" {
+  type = string
+  default = "organization-tag-policies"
+}
+
 
 variable "compliance" {
   type = object({
-    regions = object({
-      allowed = list(string),
-      denied  = list(string)
+    tags = object ({
+      entries = map(list(string)),
+      report_required = list(string)
     })
-    tags = list(string)
   })
 
   default = {
-    regions = {
-      allowed = ["eu-west-1", "eu-west-2"]
-      denied  = ["us-west-2"]
+    tags = {
+      entries = {
+        "organization:unit" = ["44Tech"],
+        "organization:costcenter" = ["44Tech"]
+        "project:name" = ["aws-organization"]
+        "project:environment" = [ "prd", "stg", "dev"]
+        "terraform:state" = []
+        "terraform:url" = []
+      },
+      report_required = ["ec2:ALL_SUPPORTED", "ecr:ALL_SUPPORTED", "rds:ALL_SUPPORTED", "s3:ALL_SUPPORTED"]
     }
-    tags = [
-      "organization:unit",
-      "organization:costcenter",
-      "project:name",
-      "project:environment",
-      "terraform:state",
-      "terraform:url",
-    ]
   }
 }

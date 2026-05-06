@@ -1,0 +1,28 @@
+{
+  "tags": {
+%{ for tag,tagvalue in tags.entries }
+    %{if index(keys(tomap(tags.entries)), tag) > 0},%{endif}
+    "${tag}": {
+      "tag_key": {
+        "@@assign": "${tag}"
+      }
+      %{if length(tagvalue) > 0}
+      ,"tag_value": {
+        "@@assign": [
+          %{ for idx2,tv in tagvalue }
+            %{if idx2 > 0},%{endif}"${tv}"
+          %{ endfor }
+        ]
+      }
+      %{endif}
+      ,"report_required_tag_for": {
+        "@@assign": [
+          %{ for indx3,rq in tags.report_required }
+           %{if indx3 > 0},%{endif}"${rq}"
+          %{ endfor }    
+        ]
+      }
+    }
+%{ endfor }    
+  }
+}

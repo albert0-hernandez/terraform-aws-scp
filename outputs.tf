@@ -1,5 +1,4 @@
-# ACCOUTN id
-output "service_control_policies_name" { value = [for k, v in aws_organizations_policy.this : k] }
+# Tagging AWS Config Rule ID
+output "tagging_aws_config_config_rule_id" { value = aws_config_config_rule.required_tags.id }
 
-# ACCOUTN id
-output "service_control_policies_raw" { value = local._service_control_policies_raw }
+output "tagging_aws_organizations_policy_id" { value = aws_organizations_policy.tagging.id }
