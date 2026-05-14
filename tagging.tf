@@ -1,5 +1,7 @@
 
 
+data "aws_organizations_organization" "org" {}
+
 resource "aws_organizations_policy" "tagging" {
   name    = var.tag_policy_name
   content = templatefile("${path.module}/compliance/tags.yml.tftpl", var.compliance)
@@ -7,10 +9,20 @@ resource "aws_organizations_policy" "tagging" {
   type = "TAG_POLICY"
 }
 
-resource "aws_organizations_policy_attachment" "tagging" {
+resource "aws_organizations_policy_attachment" "tagging_attachment_root" {
+  count = var.org_root_attch ? 1 : 0
+
   policy_id = aws_organizations_policy.tagging.id
-  target_id = var.organization_id
+  target_id = data.aws_organizations_organization.org.roots[0].id
 }
+
+resource "aws_organizations_policy_attachment" "tagging_attachment_ous" {
+  for_each = toset(var.org_ous_attch)
+
+  policy_id = aws_organizations_policy.tagging.id
+  target_id = each.value
+}
+
 
 
 locals {

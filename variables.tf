@@ -1,7 +1,16 @@
 
-variable "organization_id" {
-  type = string
+variable "org_ous_attch" {
+  type        = list(string)
+  description = "List of Organization Units IDs to attach the tag policies to"
+  default     = []
 }
+
+variable "org_root_attch" {
+  type        = bool
+  description = "Attach the Policy to Root"
+  default     = true
+}
+
 
 variable "tag_policy_name" {
   type    = string
